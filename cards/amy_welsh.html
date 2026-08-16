@@ -122,6 +122,7 @@
             placeholder="Enter bill amount"
             min="0"
             step="0.01"
+            oninput="limitDecimalPlaces(this)"
         >
 
         <label for="tipPercentage">Tip Percentage</label>
@@ -131,6 +132,7 @@
             placeholder="Enter tip percentage"
             min="0"
             step="0.01"
+            oninput="limitDecimalPlaces(this)"
         >
 
         <button type="button" onclick="calculateTip()">
@@ -146,6 +148,17 @@
     </div>
 
     <script>
+        
+        function limitDecimalPlaces(input) {
+            const value = input.value;
+            if (value.includes(".")) {
+                const decimalPart = value.split(".")[1];
+                if (decimalPart.length > 2) {
+                    input.value = value.slice(0, value.length - (decimalPart.length - 2));
+                }
+            }
+        }
+
         function calculateTip() {
             const billAmount = parseFloat(
                 document.getElementById("billAmount").value
